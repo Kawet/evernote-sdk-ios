@@ -230,7 +230,7 @@
 {
     NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (NSHTTPCookie *cookie in [cookieJar cookies]) {
-        if ([[cookie domain] hasSuffix: self.host]) {
+        if (self.host && [cookie domain] && [[cookie domain] hasSuffix: self.host]) {
             [cookieJar deleteCookie: cookie];
         }
     }
