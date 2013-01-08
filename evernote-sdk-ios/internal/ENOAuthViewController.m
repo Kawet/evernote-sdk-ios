@@ -22,6 +22,7 @@
 @synthesize authorizationURL = _authorizationURL;
 @synthesize oauthCallbackPrefix = _oauthCallbackPrefix;
 @synthesize webView = _webView;
+@synthesize activityIndicator;
 
 - (void)dealloc
 {
@@ -47,13 +48,22 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationItem.title = @"Evernote";
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.frame = self.view.frame;
+    [self.view addSubview:self.activityIndicator];
+    [self.activityIndicator startAnimating];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     UIBarButtonItem *cancelItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
                                                                                 target:self action:@selector(cancel:)] autorelease];
-    self.navigationItem.rightBarButtonItem = cancelItem;
+    self.navigationItem.leftBarButtonItem = cancelItem;
     
     // TODO: Using self.view.frame leaves a 20px black space above the webview... from status bar spacing?
     //self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
@@ -110,6 +120,10 @@
         return NO;
     }
     return YES;
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    [self.activityIndicator stopAnimating];
 }
 
 @end

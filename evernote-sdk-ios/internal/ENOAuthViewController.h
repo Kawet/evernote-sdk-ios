@@ -16,9 +16,12 @@
 - (void)oauthViewController:(ENOAuthViewController *)sender receivedOAuthCallbackURL:(NSURL *)url;
 @end
 
-@interface ENOAuthViewController : UIViewController
+@interface ENOAuthViewController : UIViewController {
+    UIActivityIndicatorView *activityIndicator;
+}
 
 @property (nonatomic, assign) id<ENOAuthViewControllerDelegate> delegate;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 - (id)initWithAuthorizationURL:(NSURL *)authorizationURL 
            oauthCallbackPrefix:(NSString *)oauthCallbackPrefix
